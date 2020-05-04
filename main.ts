@@ -42,9 +42,9 @@ b b b b b b b b b b b b b b b b
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . . . . . . . e 7 7 7 . . . . 
-. . . . . . . . e 7 7 . . . . . 
-. . . . . . . . e 7 . . . . . . 
+. . . . . . . . e 6 6 6 . . . . 
+. . . . . . . . e 6 6 . . . . . 
+. . . . . . . . e 6 . . . . . . 
 . . . . . . . . e . . . . . . . 
 . . . . . . . . e . . . . . . . 
 . . . . . . . . e . . . . . . . 
@@ -57,49 +57,11 @@ b b b b b b b b b b b b b b b b
 e e e e e e e e e e e e e e e e 
 `
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestOpen, function (sprite, location) {
+    game.over(true)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    animation.runImageAnimation(
-    kid_adventure,
-    [img`
-. . . . . . . . . . . . . . . . 
-. . . . . f f f f f f . . . . . 
-. . . f f e e e e f 2 f . . . . 
-. . f f e e e e f 2 2 2 f . . . 
-. . f e e e f f e e e e f . . . 
-. . f f f f e e 2 2 2 2 e f . . 
-. . f e 2 2 2 f f f f e 2 f . . 
-. f f f f f f f e e e f f f . . 
-. f f e 4 4 e b f 4 4 e e f . . 
-. f e e 4 d 4 1 f d d e f f . . 
-. . f e e e 4 d d d d f d d f . 
-. . . . f e e 4 e e e f b b f . 
-. . . . f 2 2 2 4 d d e b b f . 
-. . . f f 4 4 4 e d d e b f . . 
-. . . f f f f f f e e f f . . . 
-. . . . f f . . . f f f . . . . 
-. . . . . . . . . . . . . . . . 
-`,img`
-. . . . . . . . . . . . . . . . 
-. . . . . f f f f f f . . . . . 
-. . . f f e e e e f 2 f . . . . 
-. . f f e e e e f 2 2 2 f . . . 
-. . f e e e f f e e e e f . . . 
-. . f f f f e e 2 2 2 2 e f . . 
-. . f e 2 2 2 f f f f e 2 f . . 
-. f f f f f f f e e e f f f . . 
-. f f e 4 4 e b f 4 4 e e f . . 
-. f e e 4 d 4 1 f d d e f f . . 
-. . f e e e 4 d d d d f d d f . 
-. . . . f e e 4 e e e f b b f . 
-. . . . f 2 2 2 4 d d e b b f . 
-. . . f f 4 4 4 e d d e b f . . 
-. . . f f f f f f e e f f . . . 
-. . . . f f . . . f f f . . . . 
-. . . . f f . . . f f f . . . . 
-`],
-    100,
-    false
-    )
+    kid_adventure.vy = -180
 })
 let kid_adventure: Sprite = null
 kid_adventure = sprites.create(img`
@@ -317,6 +279,7 @@ kid_adventure,
 100,
 true
 )
+scene.cameraFollowSprite(kid_adventure)
 kid_adventure.ay = 350
 tiles.setTilemap(tiles.createTilemap(
             hex`2d001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000002020202020202000000000000000000000002000002000000000000000000000000000000000000000000000002000000000002020000000000000000000002000002000000000000000000000000000000000000000000000002000000000000020000000000000000000002000002000000000000000000000000000000000000020000000002000000000000020000000000000000000002000002000000000000000002000000000002000000020000000002000000000000020202020000000000000002000002000000000000000002000000000002000000020000000002000000000000000000020200000000000002000002000000030000000002000000000002000000020000000002000000000000000000000200000000000002000002000001020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202`,
@@ -341,3 +304,10 @@ tiles.setTilemap(tiles.createTilemap(
             [myTiles.tile0,sprites.dungeon.chestOpen,myTiles.tile1,myTiles.tile2],
             TileScale.Sixteen
         ))
+tiles.placeOnRandomTile(kid_adventure, myTiles.tile2)
+info.startCountdown(30)
+effects.clouds.startScreenEffect()
+forever(function () {
+    music.playMelody("C5 B - B - B C5 B ", 240)
+    music.playMelody("C5 B - B - B C5 B ", 240)
+})
